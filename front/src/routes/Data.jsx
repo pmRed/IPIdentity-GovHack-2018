@@ -24,8 +24,12 @@ export default class Page extends Component {
         ABN:'',
         warning: true,
         block: false,
+        submissionDetails:true,
+        submissionString: "somekey",
         userDetails:true,
         userString: "somekey",
+        searchDetails:true,
+        searchData: null,
         isLoading: false
     } 
 
@@ -56,12 +60,14 @@ export default class Page extends Component {
         this.setState({block: true})
         await sleep(2000)
         this.setState({block: false})
+        this.setState({submissionDetails: false})
     }
 
     async searchChain() {
         this.setState({block: true})
         await sleep(2000)
         this.setState({block: false})
+        this.setState({searchDetails: false})
     }
 
     render() {
@@ -78,9 +84,22 @@ export default class Page extends Component {
             )
         }
 
+        if(this.state.searchData){
+            table =( 
+                <Table
+                    labels = {this.state.searchData['labels']}
+                    data = {this.state.searchData['data']}
+                    processCellContent = {
+                        (e,t)=> <div>{e}</div>
+                    }
+                />
+            )
+        }
+
         return (
             <Dimmer.Dimmable dimmed={this.state.isLoading} style={{height:'100%'}}>
                 <Container fluid style={{padding:'50px 50px'}}>
+                    <h1> IP and ID Registration</h1>
                     <Segment color='blue'>
                         <h2>New Business Registration</h2>
                         <Form>
@@ -100,19 +119,24 @@ export default class Page extends Component {
                             {table}
                             <Button style={{marginTop: '10px'}} color='green' onClick={e=>{this.newUser()}}>Continue</Button>
                         </Message>
-                    </Segment>
-                    <Segment hidden={this.state.userDetails} color='red'>
-                        <h2>New User Key</h2> 
-                        <p>This is your IP user key, please store it safely:</p>
-                        {this.state.userString}
+                        <Message positive hidden={this.state.userDetails}>
+                            <h3>Your Blockchain ID</h3> 
+                            <p>This is your key to the IP-database, please store it safely:</p>
+                            {this.state.userString}
+                        </Message>
                     </Segment>
                     <Segment color='teal'>
                         <h2>Apply For IP</h2>
                         <Form>
                             <Form.Input fluid disabled={this.state.block} label='Key' onChange={(e,{value})=>this.setState({key:value})} placeholder='enter user key...' />
-                            <Form.TextArea disabled={this.state.block} label='IP Documents' onChange={(e,{value})=>this.setState({notes:value})}  placeholder='Include any required documentation here...' />
+                            <Form.TextArea disabled={this.state.block} label='IP Documents' onChange={(e,{value})=>this.setState({notes:value})}  placeholder='include any required documentation here...' />
                             <Form.Button disabled={this.state.block} color='teal' onClick={e=>{this.submitToChain()}}>Submit</Form.Button>
                         </Form>
+                        <Message positive hidden={this.state.submissionDetails}>
+                            <h3>Acknowledgement of Submission</h3> 
+                            <p>Your data has been successfully added to the record:</p>
+                            {this.state.submissionString}
+                        </Message>
                     </Segment>
                     <Segment color='orange'>
                         <h2>Search IP History</h2>
@@ -120,11 +144,14 @@ export default class Page extends Component {
                             <Form.Input fluid disabled={this.state.block} label='Search' onChange={(e,{value})=>this.setState({search:value})} placeholder='enter list of search terms...' />
                             <Form.Button disabled={this.state.block} color='orange' onClick={e=>{this.searchChain()}}>Search</Form.Button>
                         </Form>
+                        <Message hidden={this.state.searchDetails}>
+                            {this.state.searchData}
+                        </Message>
                     </Segment>
 
                 </Container>
                 <Dimmer inverted active={this.state.block}>
-                    <Loader content="Pushing to EOS"/>
+                    <Loader content="Communicating with EOSIO"/>
                 </Dimmer>
             </Dimmer.Dimmable>
         )
