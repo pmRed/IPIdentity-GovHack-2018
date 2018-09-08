@@ -10,7 +10,7 @@ import string
 app = Flask(__name__)
 CORS(app)
 
-workdir="/home/user/Documents/govhack2018/govhack2018-EZ1/blockchain/api/"
+workdir=os.getcwd()
 
 persistance_names = {}
 
@@ -28,7 +28,7 @@ def makeaccount():
     myjson = json.loads(output)
     mykey = myjson["processed"]["action_traces"][0]['act']['data']['owner']['keys'][0]['key']
     if (data not in persistance_names):
-        persistance_names[data] = {"message": "Account already exists for this business", "pubkey" : mykey, "accname" : name}
+        persistance_names[data] = {"message": "Account already exists", "pubkey" : mykey, "accname" : name}
         with open(workdir+"/accounts/dataStore_User_"+name, "r") as f:
             lines = f.readlines()
             privkey = lines[-2]
