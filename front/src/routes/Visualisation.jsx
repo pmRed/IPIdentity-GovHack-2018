@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Maps from '../components/Maps'
 import {
     Container,
     Segment,
@@ -11,7 +10,6 @@ export default class Page extends Component {
         return (
             <Container fluid style={{padding:'50px 50px'}}>
                 <Segment style={{ height:'80vh'}}>
-                    <Maps/>
                 </Segment>
             </Container>
         )
