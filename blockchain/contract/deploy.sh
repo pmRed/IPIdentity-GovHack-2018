@@ -21,4 +21,4 @@ source dataStore
 cleos wallet unlock --password $WALLET_PASSKEY
 cleos wallet import --private-key $ACC_PRIVATE_KEY
 
-cleos set contract $account build/contracts/ $contract.wasm $contract.abi -p $account@active
+cleos set contract $account build/contracts/ $contract.wasm $contract.abi -p $account@active --print-response
