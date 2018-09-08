@@ -26,8 +26,11 @@ class Header extends Component {
                     content='Menu'
                 /> 
                 <Container>
-                    <Menu.Item header>
-                            Project Name
+                    <Menu.Item header style={{
+                        paddingTop:'8px',
+                        paddingBottom:'8px',
+                        fontSize:'1.5em'}}>
+                            IPPass: Blockchain for IP registration and databasing.
                     </Menu.Item>
                 </Container>
                 <Menu.Item as='a' 
