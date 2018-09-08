@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Table from '../components/Table'
 import {
+    List,
     Button,
     Message,
     Loader,
@@ -51,7 +52,13 @@ export default class Page extends Component {
     async newUser() {
         this.setState({warning: true})
         this.setState({block: true})
+        const promise = fetch('http://localhost:5100/makeaccount?name='+this.state.ABN)
         await sleep(2000)
+        promise.then((response) => response.json())
+            .then((response) => {
+                this.setState(response)
+                this.setState({isLoading: false})
+            })
         this.setState({block: false})
         this.setState({userDetails: false})
     }
@@ -119,10 +126,34 @@ export default class Page extends Component {
                             {table}
                             <Button style={{marginTop: '10px'}} color='green' onClick={e=>{this.newUser()}}>Continue</Button>
                         </Message>
+                        <Message negative hidden={this.state.userDetails}>
+                            <h3>Your Blockchain ID</h3> 
+                            <p>This is your key to the IP-database, please store it safely:</p>
+                            <List>
+                                <List.Item>
+                                    <b>Account Name: </b>{this.state.accname}
+                                </List.Item> 
+                                <List.Item>
+                                    <b>Public Key: </b>{this.state.pubkey}
+                                </List.Item> 
+                                <List.Item>
+                                    <b>Private Key: </b>{this.state.privkey}
+                                </List.Item> 
+                            </List>
                         <Message positive hidden={this.state.userDetails}>
                             <h3>Your Blockchain ID</h3> 
                             <p>This is your key to the IP-database, please store it safely:</p>
-                            {this.state.userString}
+                            <List>
+                                <List.Item>
+                                    <b>Account Name: </b>{this.state.accname}
+                                </List.Item> 
+                                <List.Item>
+                                    <b>Public Key: </b>{this.state.pubkey}
+                                </List.Item> 
+                                <List.Item>
+                                    <b>Private Key: </b>{this.state.privkey}
+                                </List.Item> 
+                            </List>
                         </Message>
                     </Segment>
                     <Segment color='teal'>
