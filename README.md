@@ -13,7 +13,7 @@ We propose a solution that requires three parts:
 - An interface for checking additions to an IP rights database
 - A prototype implementation of a blockchain database of future IP records.
 
-We will implement de-duplication and checking functionality using ____. 
+We will implement de-duplication and checking functionality using ```fuzzywuzzy```. 
 
 Our blockchain solution will be a smartcontract implemented on the EOSIO platform. 
 Our aim is to provide a platform for internationally open and accessible IP records, 
