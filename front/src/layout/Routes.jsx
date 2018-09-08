@@ -12,17 +12,17 @@ const hashes = {
             component: Home
         },
         {
-            path: '/analytics',
-            name: 'Analytics',
+            path: '/rego',
+            name: 'ID Registration',
             icon: 'search',
             component: Data
         },
-        {
-            path: '/app',
-            name: 'Blockchain',
-            icon: 'rocket',
-            component: Blockchain
-        },
+        // {
+        //     path: '/app',
+        //     name: 'Blockchain',
+        //     icon: 'rocket',
+        //     component: Blockchain
+        // },
         {
             path: '/sources',
             name: 'Data Sources',
