@@ -28,11 +28,11 @@ def makeaccount():
     myjson = json.loads(output)
     mykey = myjson["processed"]["action_traces"][0]['act']['data']['owner']['keys'][0]['key']
     if (data not in persistance_names):
-        persistance_names[data] = {"message": "Account already exists", "pubkey" : mykey, "accname" : name, "privkey" : ""}
+        persistance_names[data] = {"exists": True, "pubkey" : mykey, "accname" : name, "privkey" : ""}
         with open(workdir+"/accounts/dataStore_User_"+name, "r") as f:
             lines = f.readlines()
             privkey = lines[-2]
-        output = {"message" : "Account created", "pubkey" : mykey, "accname" : name, "privkey" : privkey[16:]}
+        output = {"exists": False, "pubkey" : mykey, "accname" : name, "privkey" : privkey[16:]}
         return json.dumps(output)
     else:
         return json.dumps(persistance_names[data])
