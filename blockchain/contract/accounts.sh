@@ -7,14 +7,14 @@ source aliases
 EOSIO_PRIVATE_KEY="5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3"
 
 echo "Create cleos wallet"
-PASSKEY=`cleos wallet create | tail -1 | sed 's/\"//g'`
+PASSKEY=`cleos wallet create --to-console | tail -1 | sed 's/\"//g'`
 echo "Password: $PASSKEY"
 
 echo "Registering eosio private key"
 EOSIO_PUBLIC_KEY=`cleos wallet import --private-key $EOSIO_PRIVATE_KEY | sed "s/.*:\s//g"`
 
 echo "Creating user and tester accounts"
-BUFFER=`cleos create key`
+BUFFER=`cleos create key --to-console`
 ACC_PRIVATE_KEY=`echo "$BUFFER" | grep "Private" | sed "s/.*:\s//g"`
 ACC_PUBLIC_KEY=`echo "$BUFFER" | grep "Public" | sed "s/.*:\s//g"`
 

@@ -1,4 +1,4 @@
-contract = "mycontract"
+contract = "hello"
 account = "thaum"
 
 build:
@@ -7,7 +7,7 @@ build:
 clean:
 	rm -rf build
 	rm -rf dataStore
-	docker stop eosio
+	docker stop nodeos
 	./clean.sh
 
 deploy:

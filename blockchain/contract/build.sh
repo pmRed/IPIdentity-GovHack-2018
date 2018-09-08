@@ -16,4 +16,4 @@ eosiocpp -o build/contracts/$contract.wast src/contracts/$contract/*.cpp
 eosiocpp -g build/contracts/$contract.abi src/contracts/$contract/*.cpp
 
 # fix the docker damage
-docker exec eosio chown $UID:$UID /playground/build/contracts/$contract.{wasm,wast,abi}
+docker exec nodeos chown $UID:$UID /playground/build/contracts/$contract.{wasm,wast,abi}

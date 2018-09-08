@@ -16,5 +16,9 @@ fi
 
 shopt -s expand_aliases
 source aliases
+source dataStore
 
-cleos set contract $account build/contracts/ $contract.wast $contract.abi -p $account
+cleos wallet unlock --password $WALLET_PASSKEY
+cleos wallet import --private-key $ACC_PRIVATE_KEY
+
+cleos set contract $account build/contracts/ $contract.wasm $contract.abi -p $account@active
