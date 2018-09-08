@@ -32,7 +32,8 @@ export default class Page extends Component {
         searchDetails:true,
         searchData: null,
         isLoading: false,
-        exists: true 
+        exists: true,
+        failed: true
     } 
 
     updateTable(){
@@ -73,17 +74,25 @@ export default class Page extends Component {
                 this.setState(response)
                 this.setState({isLoading: false})
             })
-        await sleep(2000)
+        //await sleep(2000)
         this.setState({block: false})
         this.setState({submissionDetails: false})
     }
 
     async searchChain() {
         this.setState({block: true})
+        const promise = fetch('http://localhost:5100/getapplication?hash='+this.state.search)
         await sleep(2000)
+        promise.then((response) => response.json())
+            .then((response) => {
+                this.setState(response)
+                this.setState({isLoading: false})
+            })
+        //await sleep(2000)
         this.setState({block: false})
         this.setState({searchDetails: false})
     }
+
 
     render() {
         var table = ''
@@ -111,6 +120,8 @@ export default class Page extends Component {
             )
         }
         var positive = this.state.userDetails || this.state.exists
+        var positive_submission = this.state.submissionDetails || this.state.failed
+        var positive_search = this.state.searchDetails || this.state.notfound
         return (
             <Dimmer.Dimmable dimmed={this.state.isLoading} style={{height:'100%'}}>
                 <Container fluid style={{padding:'50px 50px'}}>
@@ -156,24 +167,35 @@ export default class Page extends Component {
                     <Segment color='teal'>
                         <h2>Apply For IP</h2>
                         <Form>
-                            <Form.Input fluid disabled={this.state.block} label='Key' onChange={(e,{value})=>this.setState({key:value})} placeholder='enter user key...' />
+                            <Form.Input fluid disabled={this.state.block} label='Your private key' onChange={(e,{value})=>this.setState({key:value})} placeholder='enter user key...' />
                             <Form.TextArea disabled={this.state.block} label='IP Documents' onChange={(e,{value})=>this.setState({notes:value})}  placeholder='include any required documentation here...' />
                             <Form.Button disabled={this.state.block} color='teal' onClick={e=>{this.submitToChain()}}>Submit</Form.Button>
                         </Form>
-                        <Message positive hidden={this.state.submissionDetails}>
+                        <Message negative hidden={this.state.submissionDetails || !this.state.failed}>
+                          <h3>Uh oh...</h3>
+                          <p>Either your private key is wrong or you have already submitted this!</p>
+                          <p><b>Computer says... {this.state.transactionlabel}</b></p>
+                        </Message>
+                        <Message positive hidden={positive_submission}>
                             <h3>Acknowledgement of Submission</h3> 
                             <p>Your data has been successfully added to the record:</p>
-                            <b>Transaction Label</b>{this.state.transactionlabel}
+                            <b>Application Hash: </b>{this.state.transactionlabel}
                         </Message>
                     </Segment>
                     <Segment color='orange'>
-                        <h2>Search IP History</h2>
+                        <h2>Get blockchain verified application</h2>
                         <Form>
-                            <Form.Input fluid disabled={this.state.block} label='Search' onChange={(e,{value})=>this.setState({search:value})} placeholder='enter list of search terms...' />
+                            <Form.Input fluid disabled={this.state.block} label='Search' onChange={(e,{value})=>this.setState({search:value})} placeholder='enter application hash...' />
                             <Form.Button disabled={this.state.block} color='orange' onClick={e=>{this.searchChain()}}>Search</Form.Button>
                         </Form>
-                        <Message hidden={this.state.searchDetails}>
-                            {this.state.searchData}
+                        <Message negative hidden={this.state.searchDetails || !this.state.notfound}>
+                          <h3>No application found on the blockchain</h3>
+                        </Message>
+                        <Message positive hidden={positive_search}>
+                          <h3>Found application!</h3>
+                          <b>Submitted by ABN: {this.state.abn}</b>
+                          <p><b>Application Document</b></p>
+                          <p>{this.state.application}</p>
                         </Message>
                     </Segment>
 

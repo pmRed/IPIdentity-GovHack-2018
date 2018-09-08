@@ -51,6 +51,7 @@ def makeaccount():
 def addapplication():
     privkey = request.args.get("privkey")
     appdoc = request.args.get("appdoc")
+    #appdoc.strip()
     if (appdoc == ""):
         return json.dumps({transactionlabel : "nodoc"})
     if (privkey in persistance_applications):
@@ -61,21 +62,23 @@ def addapplication():
         # serialize on blockchain
         myhash = hashfunclong(appdoc + accname)
         if (myhash in persistance_transactions):
-            return json.dumps({"transactionlabel" : "Already Submitted"})
+            return json.dumps({"transactionlabel" : "Already submitted " + myhash, "failed" : True})
         else:
             persistance_transactions[myhash] = {"application" : appdoc, "abn" : abn}
-        return json.dumps({"transactionlabel" : myhash, "numapplications" : numapplications, "abn" : abn, "accname" : accname})
+        return json.dumps({"transactionlabel" : myhash, "failed" : False, "numapplications" : numapplications, "abn" : abn, "accname" : accname})
     else:
-        return json.dumps({"transactionlabel" : "nokey %s" % privkey})
+        return json.dumps({"transactionlabel" : "Wrong private key", "failed" : True})
 
 
 @app.route("/getapplication", methods=['GET'])
 def getapplication():
     myhash = request.args.get("hash")
     if (myhash in persistance_transactions):
-        return json.dumps(persistance_transactions[myhash])
+        output = persistance_transactions[myhash]
+        output["notfound"] = False
+        return json.dumps(output)
     else:
-        return json.dumps({"application" : "Not found", "abn" : "Not found"})
+        return json.dumps({"application" : "Not found", "abn" : "", "notfound" : True})
 
 
 if __name__ == '__main__':
