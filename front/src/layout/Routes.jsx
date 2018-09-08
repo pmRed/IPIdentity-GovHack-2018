@@ -1,5 +1,6 @@
 import Home from '../routes/Home'
-import Visualisation from '../routes/Visualisation'
+import Blockchain from '../routes/Blockchain'
+import Sources from '../routes/Sources'
 import Data from '../routes/Data'
 
 const hashes = {
@@ -14,19 +15,19 @@ const hashes = {
             path: '/analytics',
             name: 'Analytics',
             icon: 'search',
-            component: Visualisation 
+            component: Data
         },
         {
             path: '/app',
-            name: 'Application',
+            name: 'Blockchain',
             icon: 'rocket',
-            component: Data 
+            component: Blockchain
         },
         {
             path: '/sources',
             name: 'Data Sources',
             icon: 'file',
-            component: Data
+            component: Sources
         },
     ],
     redirect: {path: '/', to: '/home', name: 'Home'}

@@ -16,7 +16,6 @@ export default class Page extends Component {
     } 
 
     updateTable(){
-        console.log(this.state.request)
         fetch('http://localhost:5000/search',
             {method: 'POST', cache: 'default', headers:
             {'Accept': 'application/json', 'Content-Type': 'application/json'},
@@ -38,6 +37,7 @@ export default class Page extends Component {
                 />
             )
         }
+
         return (
             <Container fluid style={{padding:'50px 50px'}}>
                 <h1>Duplicate Query and Explorer</h1>
@@ -47,9 +47,9 @@ export default class Page extends Component {
                         placeholder='Search...' 
                         onChange={(e, {value}) => {this.setState({request: value})}}
                     />
-                </Segment>
-                <Segment style={{overflowX: 'scroll'}}>
-                    {table}
+                    <Container fluid style={{overflowX: 'scroll'}}>
+                        {table}
+                    </Container>
                 </Segment>
 
             </Container>
