@@ -8,10 +8,10 @@ This project attempts address three problems:
 _*Can we construct a clean, fault-tolerant, distributed and immutable IP rights ledger?*_
 
 # Solution
-We propose a solution that requires three parts:
-- Standard de-duplication and verifiaction of previous records
-- An interface for checking additions to an IP rights database
-- A prototype implementation of a blockchain database of future IP records.
+We propose a solution in three parts:
+- *Correcting existing database:* Standard de-duplication and verifiaction of previous records
+- *Ensuring validitiy for new entries:* An interface for checking additions to an IP rights database
+- *Seting up for the future:* A prototype implementation of a blockchain database of future IP records.
 
 We will implement de-duplication and checking functionality using ```Levenshtein Distance``` to quantify string simmilarity and providing an expert driven interface to check the results. 
 
