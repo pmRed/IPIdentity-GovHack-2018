@@ -20,3 +20,6 @@ def search():
     lab = list(map( lambda x: {'id': x[0], 'name': x[1]}, zip(lab1,plainNames)))
     res3 = list(map(lambda x: {'key': 'r'+str(x[0]), 'value': dict(zip(lab1,x[1]))}, enumerate(res2)))
     return json.dumps({"dataLabels": lab, "dataTable": res3})
+
+if __name__ == '__main__':
+    app.run(host="0.0.0.0", port=5000, threaded=True, debug=True)
