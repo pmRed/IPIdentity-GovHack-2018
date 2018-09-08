@@ -110,7 +110,6 @@ export default class Page extends Component {
                 />
             )
         }
-        console.log(this.state)
         var positive = this.state.userDetails || this.state.exists
         return (
             <Dimmer.Dimmable dimmed={this.state.isLoading} style={{height:'100%'}}>
