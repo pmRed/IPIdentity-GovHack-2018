@@ -13,7 +13,7 @@ export default class InspectorTable extends Component {
 
         var headerCells = labels.map(
             label => (
-                <Table.HeaderCell key={label.id}>
+                <Table.HeaderCell style={{maxWidth:'100px', overflow:'wrap'}} key={label.id}>
                     {label.name}
                 </Table.HeaderCell>
             ) 
@@ -70,7 +70,7 @@ export default class InspectorTable extends Component {
                 }
                    
                 return (
-                    <Table.Row key={key} style={{height: '100px'}}>
+                    <Table.Row key={key}>
                         {_.map(value, (cell, key) => 
                             <Table.Cell key={key}>
                                 {cell}

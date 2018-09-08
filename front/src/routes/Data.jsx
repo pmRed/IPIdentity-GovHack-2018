@@ -1,40 +1,56 @@
 import React, { Component } from 'react'
 import Table from '../components/Table'
 import {
-    Container,
+    Input,
+    Segment,
+    Container
 } from 'semantic-ui-react'
 
- fetch('http://localhost:5000/search',
-{method: 'POST', cache: 'default', headers:
-{'Accept': 'application/json', 'Content-Type': 'application/json'},
-body: JSON.stringify({'key': '1Space'})})
-.then((response) => response.json())
-.then((response) => console.log(response))
 
-//fetch('http://sky.aqeel.cc:19090/filter',
-//    { method: 'POST', cache: 'default', headers:
-//        { 'Accept': 'application/json', 'Content-Type': 'application/json', },
-//      body: JSON.stringify({'search': geneList, 'exclude': excludeList}) }).
-//      then( response => response.json()
-//    ).then( response => {
-//        this.dataTable = (response.sort(
-//            function (a,b) {
-//                const aNulls =_.map(a.value,(e)=>e==null||e==='') const bNulls =_.map(b.value,(e)=>e==null||e==='') const sortVal = aNulls.map( (v,i) => { if (bNulls[i] === v) {return 0} if (v) {return 1} if (bNulls[i]) {return -1} return 0 } ).find((e)=>e!==0) if (typeof sortVal === undefined) {return 0} return sortVal } )) } )
-
-let dataLabels = [{id: 'a', name: 'stuff'}, {id: 'b', name: 'stuff'}]
-let dataTable = [{key: 'el1', value: {'a':'stuff1', 'b':'stuff2'}}]
 
 export default class Page extends Component {
+    state = {
+        dataLabels: [],
+        dataTable: [],
+        request:''
+    } 
+
+    updateTable(){
+        console.log(this.state.request)
+        fetch('http://localhost:5000/search',
+            {method: 'POST', cache: 'default', headers:
+            {'Accept': 'application/json', 'Content-Type': 'application/json'},
+            body: JSON.stringify({'key': this.state.request})})
+            .then((response) => response.json())
+            .then((response) => this.setState(response))
+    }
+
     render() {
-        return (
-            <Container fluid style={{padding:'50px 50px'}}>
+        var table = ''
+        if(this.state.dataLabels){
+            table =( 
                 <Table
-                    labels = {dataLabels}
-                    data = {dataTable}
+                    labels = {this.state.dataLabels}
+                    data = {this.state.dataTable}
                     processCellContent = {
                         (e,t)=> <div>{e}</div>
                     }
                 />
+            )
+        }
+        return (
+            <Container fluid style={{padding:'50px 50px'}}>
+                <h1>Duplicate Query and Explorer</h1>
+                <Segment>
+                    <h3>Enter Applicant Details</h3>
+                    <Input action={{ icon: 'search', onClick: e=>{this.updateTable()}}}
+                        placeholder='Search...' 
+                        onChange={(e, {value}) => {this.setState({request: value})}}
+                    />
+                </Segment>
+                <Segment style={{overflowX: 'scroll'}}>
+                    {table}
+                </Segment>
 
             </Container>
         )

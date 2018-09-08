@@ -8,7 +8,7 @@ dumb_data = []
 # OrderedDicts are already sorted
 snd = lambda t: t[1]
 def combinerino(odict):
-    return ' '.join(map(snd, odict))
+    return '|'.join(map(snd, odict))
 
 def load_csv():
     global data
@@ -21,5 +21,8 @@ def load_csv():
 
 def matches(k):
     return process.extract(k, dumb_data, limit=5, scorer=fuzz.partial_token_sort_ratio)
+
+def labels():
+    return list(data[0].keys())
 
 load_csv()
