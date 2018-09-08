@@ -26,12 +26,13 @@ export default class Page extends Component {
         warning: true,
         block: false,
         submissionDetails:true,
-        submissionString: "somekey",
+        submissionString: "",
         userDetails:true,
-        userString: "somekey",
+        userString: "",
         searchDetails:true,
         searchData: null,
-        isLoading: false
+        isLoading: false,
+        exists: true 
     } 
 
     updateTable(){
@@ -65,6 +66,13 @@ export default class Page extends Component {
 
     async submitToChain() {
         this.setState({block: true})
+        const promise = fetch('http://localhost:5100/addapplication?privkey='+this.state.key+'&appdoc='+this.state.notes)
+        await sleep(2000)
+        promise.then((response) => response.json())
+            .then((response) => {
+                this.setState(response)
+                this.setState({isLoading: false})
+            })
         await sleep(2000)
         this.setState({block: false})
         this.setState({submissionDetails: false})
@@ -102,7 +110,8 @@ export default class Page extends Component {
                 />
             )
         }
-
+        console.log(this.state)
+        var positive = this.state.userDetails || this.state.exists
         return (
             <Dimmer.Dimmable dimmed={this.state.isLoading} style={{height:'100%'}}>
                 <Container fluid style={{padding:'50px 50px'}}>
@@ -126,21 +135,10 @@ export default class Page extends Component {
                             {table}
                             <Button style={{marginTop: '10px'}} color='green' onClick={e=>{this.newUser()}}>Continue</Button>
                         </Message>
-                        <Message negative hidden={this.state.userDetails}>
-                            <h3>Your Blockchain ID</h3> 
-                            <p>This is your key to the IP-database, please store it safely:</p>
-                            <List>
-                                <List.Item>
-                                    <b>Account Name: </b>{this.state.accname}
-                                </List.Item> 
-                                <List.Item>
-                                    <b>Public Key: </b>{this.state.pubkey}
-                                </List.Item> 
-                                <List.Item>
-                                    <b>Private Key: </b>{this.state.privkey}
-                                </List.Item> 
-                            </List>
-                        <Message positive hidden={this.state.userDetails}>
+                        <Message negative hidden={this.state.userDetails || !this.state.exists}>
+                            <h3>Your details have already been registered!</h3> 
+                        </Message>
+                        <Message positive hidden={positive}>
                             <h3>Your Blockchain ID</h3> 
                             <p>This is your key to the IP-database, please store it safely:</p>
                             <List>
@@ -166,7 +164,7 @@ export default class Page extends Component {
                         <Message positive hidden={this.state.submissionDetails}>
                             <h3>Acknowledgement of Submission</h3> 
                             <p>Your data has been successfully added to the record:</p>
-                            {this.state.submissionString}
+                            <b>Transaction Label</b>{this.state.transactionlabel}
                         </Message>
                     </Segment>
                     <Segment color='orange'>
