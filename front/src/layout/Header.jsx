@@ -30,7 +30,7 @@ class Header extends Component {
                         paddingTop:'8px',
                         paddingBottom:'8px',
                         fontSize:'1.5em'}}>
-                            IPPass: Blockchain for IP registration and databasing.
+                            IPIdentity
                     </Menu.Item>
                 </Container>
                 <Menu.Item as='a' 
