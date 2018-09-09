@@ -180,6 +180,7 @@ export default class Page extends Component {
                             <h3>Acknowledgement of Submission</h3> 
                             <p>Your data has been successfully added to the record:</p>
                             <b>Application Hash: </b>{this.state.transactionlabel}
+                            <p>So far you have submitted {this.state.numapplications} applications.</p>
                         </Message>
                     </Segment>
                     <Segment color='orange'>
