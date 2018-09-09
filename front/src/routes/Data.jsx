@@ -38,7 +38,7 @@ export default class Page extends Component {
 
     updateTable(){
         var request = this.state.name+'|'+this.state.ACN+'|'+this.state.ABN
-        const promise = fetch('http://localhost:5000/search',
+        const promise = fetch('http://' + window.location.hostname + ':5000/search',
             {method: 'POST', cache: 'default', headers:
             {'Accept': 'application/json', 'Content-Type': 'application/json'},
             body: JSON.stringify({'key': request})})
@@ -54,7 +54,7 @@ export default class Page extends Component {
     async newUser() {
         this.setState({warning: true})
         this.setState({block: true})
-        const promise = fetch('http://localhost:5100/makeaccount?name='+this.state.ABN)
+        const promise = fetch('http://' + window.location.hostname + ':5100/makeaccount?name='+this.state.ABN)
         await sleep(2000)
         promise.then((response) => response.json())
             .then((response) => {
@@ -67,7 +67,7 @@ export default class Page extends Component {
 
     async submitToChain() {
         this.setState({block: true})
-        const promise = fetch('http://localhost:5100/addapplication?privkey='+this.state.key+'&appdoc='+this.state.notes)
+        const promise = fetch('http://' + window.location.hostname + ':5100/addapplication?privkey='+this.state.key+'&appdoc='+this.state.notes)
         await sleep(2000)
         promise.then((response) => response.json())
             .then((response) => {
@@ -81,7 +81,7 @@ export default class Page extends Component {
 
     async searchChain() {
         this.setState({block: true})
-        const promise = fetch('http://localhost:5100/getapplication?hash='+this.state.search)
+        const promise = fetch('http://' + window.location.hostname + ':5100/getapplication?hash='+this.state.search)
         await sleep(2000)
         promise.then((response) => response.json())
             .then((response) => {
