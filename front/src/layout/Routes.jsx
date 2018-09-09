@@ -26,7 +26,7 @@ const hashes = {
         {
             path: '/sources',
             name: 'Data Sources',
-            icon: 'file',
+            icon: 'database',
             component: Sources
         },
     ],

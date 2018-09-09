@@ -8,17 +8,11 @@ This project attempts address three problems:
 _*Can we construct a clean, fault-tolerant, distributed and immutable IP rights ledger?*_
 
 # Solution
-We propose a solution in three parts:
-- *Correcting existing database:* Standard de-duplication and verifiaction of previous records
-- *Ensuring validitiy for new entries:* An interface for checking additions to an IP rights database
-- *Seting up for the future:* A prototype implementation of a blockchain database of future IP records.
-
-We will implement de-duplication and checking functionality using ```Levenshtein Distance``` to quantify string simmilarity and providing an expert driven interface to check the results. 
-
-Our blockchain solution will be a smartcontract implemented on the EOSIO platform. 
-Our aim is to provide a platform for internationally open and accessible IP records, 
-where the smartcontract enforces de-duplication of records and verification. The contract will
-also feature user permissions such that IP agencies can audit and update records where necessary.
+Our solution leverages blockchain technology to provide a decentralized database for serialising immutable artefacts of IP records, which satisfies the above requirements. Built on the EOSIO platform, IP-identity leverages the sophisticated smart-contract and on-chain persistence services provided by the EOSIO API.
+                
+Our platform allows users to create and view IP documents through a web interface. Duplication of entries is intrinsically impossible through our use of document hashes as indices in the EOSIO Multi-Index DB API. Users receive feedback if their entry is similar to an existing entry through a poop-up list of similar entries.
+                
+To facilitate rapid querying of our IP database, a custom persistence layer is created locally, which is verification against the blockchain. In this way, users get the best of both worlds: the responsiveness of a local databse, and the security of a decentralised blockchain database.
 
 ## Implementation 
 
