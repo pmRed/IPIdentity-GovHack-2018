@@ -26,9 +26,9 @@ export default class Page extends Component {
         warning: true,
         block: false,
         submissionDetails:true,
-        submissionString: "",
+        submissionString: '',
         userDetails:true,
-        userString: "",
+        userString: '',
         searchDetails:true,
         searchData: null,
         isLoading: false,
@@ -172,9 +172,9 @@ export default class Page extends Component {
                             <Form.Button disabled={this.state.block} color='teal' onClick={e=>{this.submitToChain()}}>Submit</Form.Button>
                         </Form>
                         <Message negative hidden={this.state.submissionDetails || !this.state.failed}>
-                          <h3>Uh oh...</h3>
-                          <p>Either your private key is wrong or you have already submitted this!</p>
-                          <p><b>Computer says... {this.state.transactionlabel}</b></p>
+                            <h3>Uh oh...</h3>
+                            <p>Either your private key is wrong or you have already submitted this!</p>
+                            <p><b>Computer says... {this.state.transactionlabel}</b></p>
                         </Message>
                         <Message positive hidden={positive_submission}>
                             <h3>Acknowledgement of Submission</h3> 
@@ -189,13 +189,13 @@ export default class Page extends Component {
                             <Form.Button disabled={this.state.block} color='orange' onClick={e=>{this.searchChain()}}>Search</Form.Button>
                         </Form>
                         <Message negative hidden={this.state.searchDetails || !this.state.notfound}>
-                          <h3>No application found on the blockchain</h3>
+                            <h3>No application found on the blockchain</h3>
                         </Message>
                         <Message positive hidden={positive_search}>
-                          <h3>Found application!</h3>
-                          <b>Submitted by ABN: {this.state.abn}</b>
-                          <p><b>Application Document</b></p>
-                          <p>{this.state.application}</p>
+                            <h3>Found application!</h3>
+                            <b>Submitted by ABN: {this.state.abn}</b>
+                            <p><b>Application Document</b></p>
+                            <p>{this.state.application}</p>
                         </Message>
                     </Segment>
 
